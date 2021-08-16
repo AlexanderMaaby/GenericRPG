@@ -10,6 +10,8 @@ namespace GenericRPG
         {
             Mage heroicdude = new Mage();
             Console.WriteLine("Hello World!");
+            Weapons weapon = new Weapons();
+            Console.WriteLine("Bong bong: " + weapon.ItemSlot.ToString());
             foreach(string turnips in heroicdude.CharacterSheetString())
             {
                 Console.WriteLine(turnips);

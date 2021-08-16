@@ -19,15 +19,15 @@ namespace GenericRPG
             Level = 1;
         }
 
-        public void LevelUp()
+        public void LevelUp(int levelsToGain)
         {
-            Level++;
+            Level += levelsToGain;
             IncreasePrimaryAttributes();
         }
 
         public string[] CharacterSheetString()
         {
-            string[] characterSheet = new string[9];
+            string[] characterSheet = new string[10];
             characterSheet[0] = "Name: " + Name;
             characterSheet[1] = "Level: " + Level.ToString();
             characterSheet[2] = "Strength: " + basePrimaryAttributes.Strength.ToString();
@@ -53,6 +53,10 @@ namespace GenericRPG
         public override void IncreasePrimaryAttributes()
         {
             basePrimaryAttributes.IncreasePrimaryAttributes(1,1,5,3);
+        }
+        public void EquipItem(Item item)
+        {
+            //inventory.Add(item.ItemSlot, item);
         }
     }
 }
