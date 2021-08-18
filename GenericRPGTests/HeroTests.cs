@@ -77,6 +77,25 @@ namespace GenericRPGTests
             Assert.Equal(expected, actual);
         }
         [Fact]
+        public void RogueBasePrimaryAttributes_DefaultValueAdded_ShouldBeAtLevelOneValues()
+        {
+            //Arrange
+            GenericRPG.Rogue hero = new GenericRPG.Rogue();
+            int[] expected = new int[] { 6, 2, 1, 8 };
+            //Act
+            GenericRPG.BasePrimaryAttributes temp = new GenericRPG.BasePrimaryAttributes()
+            {
+                Dexterity = hero.totalPrimaryAttributes.Dexterity,
+                Strength = hero.totalPrimaryAttributes.Strength,
+                Intelligence = hero.totalPrimaryAttributes.Intelligence,
+                Vitality = hero.totalPrimaryAttributes.Vitality
+            };
+            int[] actual = new int[]
+            { (int)temp.Dexterity, (int)temp.Strength, (int)temp.Intelligence, (int)temp.Vitality };
+            //Assert
+            Assert.Equal(expected, actual);
+        }
+        [Fact]
         public void MageBasePrimaryAttributes_LevelUpValue_ShouldBeAtLevelTwoValues()
         {
             //Arrange
@@ -103,6 +122,27 @@ namespace GenericRPGTests
             //Arrange
             GenericRPG.Warrior hero = new GenericRPG.Warrior();
             int[] expected = new int[] { 4, 8, 2, 15 };
+            int levelsToGain = 1;
+            //Act
+            hero.LevelUp(levelsToGain);
+            GenericRPG.BasePrimaryAttributes temp = new GenericRPG.BasePrimaryAttributes()
+            {
+                Dexterity = hero.totalPrimaryAttributes.Dexterity,
+                Strength = hero.totalPrimaryAttributes.Strength,
+                Intelligence = hero.totalPrimaryAttributes.Intelligence,
+                Vitality = hero.totalPrimaryAttributes.Vitality
+            };
+            int[] actual = new int[]
+            { (int)temp.Dexterity, (int)temp.Strength, (int)temp.Intelligence, (int)temp.Vitality };
+            //Assert
+            Assert.Equal(expected, actual);
+        }
+        [Fact]
+        public void RogueBasePrimaryAttributes_LevelUpValue_ShouldBeAtLevelTwoValues()
+        {
+            //Arrange
+            GenericRPG.Rogue hero = new GenericRPG.Rogue();
+            int[] expected = new int[] { 10, 3, 2, 11 };
             int levelsToGain = 1;
             //Act
             hero.LevelUp(levelsToGain);
