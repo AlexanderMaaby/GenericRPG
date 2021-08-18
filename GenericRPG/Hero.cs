@@ -109,7 +109,7 @@ namespace GenericRPG
             }
             else
             {
-                tempDPS = 1 * tempModifier;
+                tempDPS = 1.00 * tempModifier;
             }
             return tempDPS;
         }

@@ -17,7 +17,7 @@ namespace GenericRPG
             ItemName = "Bananbukse";
             ItemLevel = 1;
             ItemSlot = ItemSlot.SLOT_HEAD;
-            armorType = ArmorType.ARMOR_CLOTH;
+            armorType = ArmorType.ARMOR_PLATE;
             primaryAttributes = new();
             primaryAttributes.Intelligence = 2;
             primaryAttributes.Vitality = 4;

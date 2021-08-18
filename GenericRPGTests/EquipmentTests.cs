@@ -124,5 +124,38 @@ namespace GenericRPGTests
             //Assert
             Assert.Equal(expected, actual);
         }
+        [Fact]
+        public void CharacterDPS_WarriorDPSAtLevelOne_ShouldGiveCorrectDPS()
+        {
+            //Arrange
+            GenericRPG.Warrior hero = new GenericRPG.Warrior();
+            double expected = 1.00 * (1.00 * (1.00 + (5.00 / 100.00)));
+            //Act
+            double actual = hero.CharacterDPS();
+            //Assert
+            Assert.Equal(expected, actual);
+        }
+        [Fact]
+        public void CharacterDPS_WarriorDPSWithAxeEquipped_ShouldGiveCorrectDPS()
+        {
+            //Arrange
+            GenericRPG.Warrior hero = new GenericRPG.Warrior();
+            GenericRPG.Weapon testAxe = new GenericRPG.Weapon()
+            {
+                ItemName = "Garrosh Axe",
+                ItemLevel = 1,
+                ItemSlot = GenericRPG.ItemSlot.SLOT_WEAPON,
+                WeaponType = GenericRPG.WeaponType.WEAPON_AXE,
+                WeaponDamage = 7,
+                AttackSpeed = 1.1,
+                AttackDPS = 7.0 * 1.1
+            };
+            double expected = (7.00 * 1.1) * (1.00 * (1.00 + (5.00 / 100.00)));
+            //Act
+            hero.EquipItem(testAxe);
+            double actual = hero.CharacterDPS();
+            //Assert
+            Assert.Equal(expected, actual);
+        }
     }
 }
