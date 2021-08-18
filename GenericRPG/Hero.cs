@@ -8,8 +8,8 @@ namespace GenericRPG
 {
     public abstract class Hero
     {
-        protected string Name { get; set; }
-        public int Level { get; set; }
+        public string Name { get; set; } = "Generic Hero";
+        public int Level { get; set; } = 1;
         public BasePrimaryAttributes basePrimaryAttributes;
         public BasePrimaryAttributes totalPrimaryAttributes;
         public SecondaryAttributes secondaryAttributes;
@@ -17,8 +17,6 @@ namespace GenericRPG
 
         public Hero()
         {
-            Name = "Bobcat";
-            Level = 1;
         }
 
         public void LevelUp(int levelsToGain)
@@ -26,7 +24,10 @@ namespace GenericRPG
             if (levelsToGain > 0)
             {
                 Level += levelsToGain;
-                IncreasePrimaryAttributes();
+                for (int i=0; i < levelsToGain; i++)
+                {
+                    IncreasePrimaryAttributes();
+                } 
             }
             else
             {
@@ -78,6 +79,10 @@ namespace GenericRPG
 
         public abstract double CharacterDPS();
 
+        public abstract bool AvailableArmorType(Armor item);
+
+        public abstract bool AvailableWeaponType(Weapon item);
+
     }
     public class Mage : Hero
     {
@@ -95,15 +100,24 @@ namespace GenericRPG
 
         public override double CharacterDPS()
         {
-            Weapon weapon = inventory[ItemSlot.SLOT_WEAPON.ToString()];
-            double tempModifier = 1.00 + (double) totalPrimaryAttributes.Intelligence / 100.00;
-            double tempDPS = weapon.AttackDPS * tempModifier;
+            Weapon weapon;
+            double tempDPS;
+            double tempModifier = 1.00 + (double)totalPrimaryAttributes.Intelligence / 100.00;
+            if (inventory.ContainsKey(ItemSlot.SLOT_WEAPON.ToString()))
+            {
+                weapon = inventory[ItemSlot.SLOT_WEAPON.ToString()];
+                tempDPS = weapon.AttackDPS * tempModifier;
+            }
+            else
+            {
+                tempDPS = 1 * tempModifier;
+            }
             return tempDPS;
         }
         public string EquipItem(Weapon item)
         {
             string returnstring = "No weapon equipped!";
-            if (((item.WeaponType == WeaponType.WEAPON_STAFF) || (item.WeaponType == WeaponType.WEAPON_WAND)) && item.ItemLevel <= Level)
+            if (AvailableWeaponType(item))
             {
                 inventory.Remove(item.ItemSlot.ToString());
                 inventory.Add(item.ItemSlot.ToString(), item);
@@ -120,7 +134,7 @@ namespace GenericRPG
         public string EquipItem(Armor item)
         {
             string returnstring = "No item equipped!";
-            if(item.armorType == ArmorType.ARMOR_CLOTH && item.ItemLevel <= Level)
+            if(AvailableArmorType(item))
             {
                 if (inventory.ContainsKey(item.ItemSlot.ToString()))
                 {
@@ -135,10 +149,19 @@ namespace GenericRPG
             }
             else
             {
-                //add custom exception
                 throw new InvalidArmorException("This character is unable to equip this armor");
             }
             return returnstring;
+        }
+
+        public override bool AvailableArmorType(Armor item)
+        {
+            return (item.armorType == ArmorType.ARMOR_CLOTH && item.ItemLevel <= Level);
+        }
+
+        public override bool AvailableWeaponType(Weapon item)
+        {
+            return (item.WeaponType == WeaponType.WEAPON_STAFF || item.WeaponType == WeaponType.WEAPON_WAND) && item.ItemLevel <= Level;
         }
     }
 }
