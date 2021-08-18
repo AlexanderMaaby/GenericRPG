@@ -3,7 +3,7 @@ using Xunit;
 
 namespace GenericRPGTests
 {
-    public class Mage
+    public class HeroTests
     {
         [Fact]
         public void Mage_CharacterCreated_ShouldBeLevelOne()
@@ -30,7 +30,7 @@ namespace GenericRPGTests
             Assert.Equal(expected, actual);
         }
         [Fact]
-        public void Mage_CharacterLevelUpZero_ShouldThrowArgumentException()
+        public void MageLevelUp_LevelUpZero_ShouldThrowArgumentException()
         {
             //Arrange
             GenericRPG.Mage hero = new GenericRPG.Mage();
@@ -39,7 +39,7 @@ namespace GenericRPGTests
             Assert.Throws<ArgumentException>(() => hero.LevelUp(0));
         }
         [Fact]
-        public void BasePrimaryAttributes_DefaultValueAdded_ShouldBeAtLevelOneValues()
+        public void MageBasePrimaryAttributes_DefaultValueAdded_ShouldBeAtLevelOneValues()
         {
             //Arrange
             GenericRPG.Mage hero = new GenericRPG.Mage();
@@ -53,6 +53,25 @@ namespace GenericRPGTests
                 Vitality = hero.totalPrimaryAttributes.Vitality
             };
             int[] actual = new int[] 
+            { (int)temp.Dexterity, (int)temp.Strength, (int)temp.Intelligence, (int)temp.Vitality };
+            //Assert
+            Assert.Equal(expected, actual);
+        }
+        [Fact]
+        public void WarriorBasePrimaryAttributes_DefaultValueAdded_ShouldBeAtLevelOneValues()
+        {
+            //Arrange
+            GenericRPG.Warrior hero = new GenericRPG.Warrior();
+            int[] expected = new int[] { 2, 5, 1, 10 };
+            //Act
+            GenericRPG.BasePrimaryAttributes temp = new GenericRPG.BasePrimaryAttributes()
+            {
+                Dexterity = hero.totalPrimaryAttributes.Dexterity,
+                Strength = hero.totalPrimaryAttributes.Strength,
+                Intelligence = hero.totalPrimaryAttributes.Intelligence,
+                Vitality = hero.totalPrimaryAttributes.Vitality
+            };
+            int[] actual = new int[]
             { (int)temp.Dexterity, (int)temp.Strength, (int)temp.Intelligence, (int)temp.Vitality };
             //Assert
             Assert.Equal(expected, actual);
