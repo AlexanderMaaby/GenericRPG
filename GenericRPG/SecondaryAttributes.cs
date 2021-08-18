@@ -19,6 +19,11 @@ namespace GenericRPG
             ArmorRating = str + dex;
             ElementalResistance = intel;
         }
+
+        public SecondaryAttributes()
+        {
+
+        }
         public void RecalculateSecondaryAttributes(int str, int dex, int intel, int vit)
         {
             Health = vit * vitalityHealthModifier;

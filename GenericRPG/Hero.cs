@@ -33,6 +33,7 @@ namespace GenericRPG
             {
                 throw new ArgumentException(string.Format("{0} can not be 0 or less", levelsToGain), "levelsToGain");
             }
+            RecalculateSecondaryAttributes();
         }
         
         public void RemoveTemporaryAttributes(Armor item)

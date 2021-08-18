@@ -96,6 +96,25 @@ namespace GenericRPGTests
             Assert.Equal(expected, actual);
         }
         [Fact]
+        public void RangerBasePrimaryAttributes_DefaultValueAdded_ShouldBeAtLevelOneValues()
+        {
+            //Arrange
+            GenericRPG.Ranger hero = new GenericRPG.Ranger();
+            int[] expected = new int[] { 7, 1, 1, 8 };
+            //Act
+            GenericRPG.BasePrimaryAttributes temp = new GenericRPG.BasePrimaryAttributes()
+            {
+                Dexterity = hero.totalPrimaryAttributes.Dexterity,
+                Strength = hero.totalPrimaryAttributes.Strength,
+                Intelligence = hero.totalPrimaryAttributes.Intelligence,
+                Vitality = hero.totalPrimaryAttributes.Vitality
+            };
+            int[] actual = new int[]
+            { (int)temp.Dexterity, (int)temp.Strength, (int)temp.Intelligence, (int)temp.Vitality };
+            //Assert
+            Assert.Equal(expected, actual);
+        }
+        [Fact]
         public void MageBasePrimaryAttributes_LevelUpValue_ShouldBeAtLevelTwoValues()
         {
             //Arrange
@@ -155,6 +174,47 @@ namespace GenericRPGTests
             };
             int[] actual = new int[]
             { (int)temp.Dexterity, (int)temp.Strength, (int)temp.Intelligence, (int)temp.Vitality };
+            //Assert
+            Assert.Equal(expected, actual);
+        }
+        [Fact]
+        public void RangerBasePrimaryAttributes_LevelUpValue_ShouldBeAtLevelTwoValues()
+        {
+            //Arrange
+            GenericRPG.Ranger hero = new GenericRPG.Ranger();
+            int[] expected = new int[] { 12, 2, 2, 10 };
+            int levelsToGain = 1;
+            //Act
+            hero.LevelUp(levelsToGain);
+            GenericRPG.BasePrimaryAttributes temp = new GenericRPG.BasePrimaryAttributes()
+            {
+                Dexterity = hero.totalPrimaryAttributes.Dexterity,
+                Strength = hero.totalPrimaryAttributes.Strength,
+                Intelligence = hero.totalPrimaryAttributes.Intelligence,
+                Vitality = hero.totalPrimaryAttributes.Vitality
+            };
+            int[] actual = new int[]
+            { (int)temp.Dexterity, (int)temp.Strength, (int)temp.Intelligence, (int)temp.Vitality };
+            //Assert
+            Assert.Equal(expected, actual);
+        }
+        [Fact]
+        public void WarriorSecondaryAttributes_LevelUpValue_ShouldBeAtLevelTwoValues()
+        {
+            //Arrange
+            GenericRPG.Warrior hero = new GenericRPG.Warrior();
+            int[] expected = new int[] { 150, 12, 2 };
+            int levelsToGain = 1;
+            //Act
+            hero.LevelUp(levelsToGain);
+            GenericRPG.SecondaryAttributes temp = new GenericRPG.SecondaryAttributes()
+            {
+                Health = hero.secondaryAttributes.Health,
+                ArmorRating = hero.secondaryAttributes.ArmorRating,
+                ElementalResistance = hero.secondaryAttributes.ElementalResistance
+            };
+            int[] actual = new int[]
+            { (int)temp.Health, (int)temp.ArmorRating, (int)temp.ElementalResistance };
             //Assert
             Assert.Equal(expected, actual);
         }
