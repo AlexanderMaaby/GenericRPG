@@ -10,13 +10,16 @@ namespace GenericRPG
         {
             Mage heroicdude = new Mage();
             Console.WriteLine("Hello World!");
-            Weapons weapon = new Weapons();
+            Weapon weapon = new Weapon();
+            Armor armor = new Armor();
             Console.WriteLine("Bong bong: " + weapon.ItemSlot.ToString());
+            heroicdude.EquipItem(weapon);
+            heroicdude.EquipItem(armor);
             foreach(string turnips in heroicdude.CharacterSheetString())
             {
                 Console.WriteLine(turnips);
             }
-            //ColorfulAnimation();
+          
         }
         static void ColorfulAnimation()
         {

@@ -26,9 +26,9 @@ namespace GenericRPG
 
     public enum ItemSlot
     {
-        Head,
-        Body,
-        Legs,
-        Weapon
+        SLOT_HEAD,
+        SLOT_BODY,
+        SLOT_LEGS,
+        SLOT_WEAPON
     }
 }

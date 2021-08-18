@@ -9,9 +9,11 @@ namespace GenericRPG
     public abstract class Hero
     {
         protected string Name { get; set; }
-        protected int Level { get; set; }
-        protected BasePrimaryAttributes basePrimaryAttributes;
-        protected SecondaryAttributes secondaryAttributes;
+        public int Level { get; set; }
+        public BasePrimaryAttributes basePrimaryAttributes;
+        public BasePrimaryAttributes totalPrimaryAttributes;
+        public SecondaryAttributes secondaryAttributes;
+        public Dictionary<string, dynamic> inventory = new Dictionary<string, dynamic>();
 
         public Hero()
         {
@@ -21,26 +23,60 @@ namespace GenericRPG
 
         public void LevelUp(int levelsToGain)
         {
-            Level += levelsToGain;
-            IncreasePrimaryAttributes();
+            if (levelsToGain > 0)
+            {
+                Level += levelsToGain;
+                IncreasePrimaryAttributes();
+            }
+            else
+            {
+                throw new ArgumentException(string.Format("{0} can not be 0 or less", levelsToGain), "levelsToGain");
+            }
+        }
+        
+        public void RemoveTemporaryAttributes(Armor item)
+        {
+            totalPrimaryAttributes.Intelligence -= item.primaryAttributes?.Intelligence ?? 0;
+            totalPrimaryAttributes.Strength -= item.primaryAttributes?.Strength ?? 0;
+            totalPrimaryAttributes.Dexterity -= item.primaryAttributes?.Dexterity ?? 0;
+            totalPrimaryAttributes.Vitality -= item.primaryAttributes?.Vitality ?? 0;
+        }
+        public void AddTemporaryAttributes(Armor item)
+        {
+            totalPrimaryAttributes.Intelligence += item.primaryAttributes?.Intelligence ?? 0;
+            totalPrimaryAttributes.Strength += item.primaryAttributes?.Strength ?? 0;
+            totalPrimaryAttributes.Dexterity += item.primaryAttributes?.Dexterity ?? 0;
+            totalPrimaryAttributes.Vitality += item.primaryAttributes?.Vitality ?? 0;
+        }
+
+        public void RecalculateSecondaryAttributes()
+        {
+            int tempStrength = (int) totalPrimaryAttributes.Strength;
+            int tempInt = (int)totalPrimaryAttributes.Intelligence;
+            int tempDex = (int)totalPrimaryAttributes.Dexterity;
+            int tempVit = (int)totalPrimaryAttributes.Vitality;
+            secondaryAttributes = new SecondaryAttributes(tempStrength, tempDex, tempInt, tempVit);
         }
 
         public string[] CharacterSheetString()
         {
+            Console.WriteLine(totalPrimaryAttributes.Intelligence.ToString());
             string[] characterSheet = new string[10];
             characterSheet[0] = "Name: " + Name;
             characterSheet[1] = "Level: " + Level.ToString();
-            characterSheet[2] = "Strength: " + basePrimaryAttributes.Strength.ToString();
-            characterSheet[3] = "Intelligence: " + basePrimaryAttributes.Intelligence.ToString();
-            characterSheet[4] = "Dexterity: " + basePrimaryAttributes.Dexterity.ToString();
+            characterSheet[2] = "Strength: " + totalPrimaryAttributes.Strength.ToString() + " ("+ basePrimaryAttributes.Strength.ToString() +")";
+            characterSheet[3] = "Intelligence: " + totalPrimaryAttributes.Intelligence.ToString() + " (" + basePrimaryAttributes.Intelligence.ToString() +")";
+            characterSheet[4] = "Dexterity: " + totalPrimaryAttributes.Dexterity.ToString() + " (" + basePrimaryAttributes.Dexterity.ToString() + ")";
             characterSheet[5] = "Health: " + secondaryAttributes.Health.ToString();
             characterSheet[6] = "Armor Rating: " + secondaryAttributes.ArmorRating.ToString();
             characterSheet[7] = "Elemental Resistance: " + secondaryAttributes.ElementalResistance.ToString();
-            characterSheet[8] = "DPS: " + "Player is incapable of hurting anything";
+            characterSheet[8] = "DPS: " + CharacterDPS();
             return characterSheet;
         }
 
         public abstract void IncreasePrimaryAttributes();
+
+        public abstract double CharacterDPS();
 
     }
     public class Mage : Hero
@@ -48,15 +84,54 @@ namespace GenericRPG
         public Mage()
         {
             basePrimaryAttributes = new BasePrimaryAttributes(1,1,8,5);
+            totalPrimaryAttributes = new BasePrimaryAttributes(1,1,8,5);
             secondaryAttributes = new SecondaryAttributes(1,1,8,5);
         }
         public override void IncreasePrimaryAttributes()
         {
-            basePrimaryAttributes.IncreasePrimaryAttributes(1,1,5,3);
+            basePrimaryAttributes.IncreasePrimaryAttributes(1, 1, 5, 3);
+            totalPrimaryAttributes.IncreasePrimaryAttributes(1, 1, 5, 3);
         }
-        public void EquipItem(Item item)
+
+        public override double CharacterDPS()
         {
-            //inventory.Add(item.ItemSlot, item);
+            Weapon weapon = inventory[ItemSlot.SLOT_WEAPON.ToString()];
+            double tempModifier = 1.00 + (double) totalPrimaryAttributes.Intelligence / 100.00;
+            double tempDPS = weapon.AttackDPS * tempModifier;
+            return tempDPS;
+        }
+        public void EquipItem(Weapon item)
+        {
+            if (((item.WeaponType == WeaponType.WEAPON_STAFF) || (item.WeaponType == WeaponType.WEAPON_WAND)) && item.ItemLevel <= Level)
+            {
+                inventory.Remove(item.ItemSlot.ToString());
+                inventory.Add(item.ItemSlot.ToString(), item);
+            }
+            else
+            {
+                //catch custom exception
+                throw new InvalidWeaponException("This character cannot equip this weapon");
+            }
+        }
+
+        public void EquipItem(Armor item)
+        {
+            if(item.armorType == ArmorType.ARMOR_CLOTH && item.ItemLevel <= Level)
+            {
+                if (inventory.ContainsKey(item.ItemSlot.ToString()))
+                {
+                    Armor oldItem = inventory[item.ItemSlot.ToString()];
+                    RemoveTemporaryAttributes(oldItem);
+                    inventory.Remove(item.ItemSlot.ToString());
+                }
+                inventory.Add(item.ItemSlot.ToString(), item);
+                AddTemporaryAttributes(item);
+                RecalculateSecondaryAttributes();
+            }
+            else
+            {
+                //add custom exception
+            }
         }
     }
 }
