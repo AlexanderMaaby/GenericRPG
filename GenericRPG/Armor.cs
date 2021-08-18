@@ -23,7 +23,6 @@ namespace GenericRPG
             primaryAttributes.Vitality = 4;
         }
     }
-
     public enum ArmorType
     {
         ARMOR_CLOTH,
