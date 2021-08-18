@@ -15,7 +15,7 @@ namespace GenericRPG
         public Armor()
         {
             ItemName = "Bananbukse";
-            ItemLevel = 2;
+            ItemLevel = 1;
             ItemSlot = ItemSlot.SLOT_HEAD;
             armorType = ArmorType.ARMOR_CLOTH;
             primaryAttributes = new();

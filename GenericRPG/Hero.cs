@@ -100,22 +100,26 @@ namespace GenericRPG
             double tempDPS = weapon.AttackDPS * tempModifier;
             return tempDPS;
         }
-        public void EquipItem(Weapon item)
+        public string EquipItem(Weapon item)
         {
+            string returnstring = "No weapon equipped!";
             if (((item.WeaponType == WeaponType.WEAPON_STAFF) || (item.WeaponType == WeaponType.WEAPON_WAND)) && item.ItemLevel <= Level)
             {
                 inventory.Remove(item.ItemSlot.ToString());
                 inventory.Add(item.ItemSlot.ToString(), item);
+                returnstring = "New weapon equipped!";
             }
             else
             {
                 //catch custom exception
                 throw new InvalidWeaponException("This character cannot equip this weapon");
             }
+            return returnstring;
         }
 
-        public void EquipItem(Armor item)
+        public string EquipItem(Armor item)
         {
+            string returnstring = "No item equipped!";
             if(item.armorType == ArmorType.ARMOR_CLOTH && item.ItemLevel <= Level)
             {
                 if (inventory.ContainsKey(item.ItemSlot.ToString()))
@@ -127,11 +131,14 @@ namespace GenericRPG
                 inventory.Add(item.ItemSlot.ToString(), item);
                 AddTemporaryAttributes(item);
                 RecalculateSecondaryAttributes();
+                returnstring = "New armor equipped!";
             }
             else
             {
                 //add custom exception
+                throw new InvalidArmorException("This character is unable to equip this armor");
             }
+            return returnstring;
         }
     }
 }
