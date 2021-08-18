@@ -58,62 +58,6 @@ namespace GenericRPG
             int tempVit = (int)totalPrimaryAttributes.Vitality;
             secondaryAttributes = new SecondaryAttributes(tempStrength, tempDex, tempInt, tempVit);
         }
-
-        public string[] CharacterSheetString()
-        {
-            Console.WriteLine(totalPrimaryAttributes.Intelligence.ToString());
-            string[] characterSheet = new string[10];
-            characterSheet[0] = "Name: " + Name;
-            characterSheet[1] = "Level: " + Level.ToString();
-            characterSheet[2] = "Strength: " + totalPrimaryAttributes.Strength.ToString() + " ("+ basePrimaryAttributes.Strength.ToString() +")";
-            characterSheet[3] = "Intelligence: " + totalPrimaryAttributes.Intelligence.ToString() + " (" + basePrimaryAttributes.Intelligence.ToString() +")";
-            characterSheet[4] = "Dexterity: " + totalPrimaryAttributes.Dexterity.ToString() + " (" + basePrimaryAttributes.Dexterity.ToString() + ")";
-            characterSheet[5] = "Health: " + secondaryAttributes.Health.ToString();
-            characterSheet[6] = "Armor Rating: " + secondaryAttributes.ArmorRating.ToString();
-            characterSheet[7] = "Elemental Resistance: " + secondaryAttributes.ElementalResistance.ToString();
-            characterSheet[8] = "DPS: " + CharacterDPS();
-            return characterSheet;
-        }
-
-        public abstract void IncreasePrimaryAttributes();
-
-        public abstract double CharacterDPS();
-
-        public abstract bool AvailableArmorType(Armor item);
-
-        public abstract bool AvailableWeaponType(Weapon item);
-
-    }
-    public class Mage : Hero
-    {
-        public Mage()
-        {
-            basePrimaryAttributes = new BasePrimaryAttributes(1,1,8,5);
-            totalPrimaryAttributes = new BasePrimaryAttributes(1,1,8,5);
-            secondaryAttributes = new SecondaryAttributes(1,1,8,5);
-        }
-        public override void IncreasePrimaryAttributes()
-        {
-            basePrimaryAttributes.IncreasePrimaryAttributes(1, 1, 5, 3);
-            totalPrimaryAttributes.IncreasePrimaryAttributes(1, 1, 5, 3);
-        }
-
-        public override double CharacterDPS()
-        {
-            Weapon weapon;
-            double tempDPS;
-            double tempModifier = 1.00 + (double)totalPrimaryAttributes.Intelligence / 100.00;
-            if (inventory.ContainsKey(ItemSlot.SLOT_WEAPON.ToString()))
-            {
-                weapon = inventory[ItemSlot.SLOT_WEAPON.ToString()];
-                tempDPS = weapon.AttackDPS * tempModifier;
-            }
-            else
-            {
-                tempDPS = 1 * tempModifier;
-            }
-            return tempDPS;
-        }
         public string EquipItem(Weapon item)
         {
             string returnstring = "No weapon equipped!";
@@ -134,7 +78,7 @@ namespace GenericRPG
         public string EquipItem(Armor item)
         {
             string returnstring = "No item equipped!";
-            if(AvailableArmorType(item))
+            if (AvailableArmorType(item))
             {
                 if (inventory.ContainsKey(item.ItemSlot.ToString()))
                 {
@@ -153,15 +97,45 @@ namespace GenericRPG
             }
             return returnstring;
         }
-
-        public override bool AvailableArmorType(Armor item)
+        public double CharacterDPS()
         {
-            return (item.armorType == ArmorType.ARMOR_CLOTH && item.ItemLevel <= Level);
+            Weapon weapon;
+            double tempDPS;
+            double tempModifier = 1.00 + GetMainPrimaryAttributeValue() / 100.00;
+            if (inventory.ContainsKey(ItemSlot.SLOT_WEAPON.ToString()))
+            {
+                weapon = inventory[ItemSlot.SLOT_WEAPON.ToString()];
+                tempDPS = weapon.AttackDPS * tempModifier;
+            }
+            else
+            {
+                tempDPS = 1 * tempModifier;
+            }
+            return tempDPS;
+        }
+        public string[] CharacterSheetString()
+        {
+            Console.WriteLine(totalPrimaryAttributes.Intelligence.ToString());
+            string[] characterSheet = new string[10];
+            characterSheet[0] = "Name: " + Name;
+            characterSheet[1] = "Level: " + Level.ToString();
+            characterSheet[2] = "Strength: " + totalPrimaryAttributes.Strength.ToString() + " ("+ basePrimaryAttributes.Strength.ToString() +")";
+            characterSheet[3] = "Intelligence: " + totalPrimaryAttributes.Intelligence.ToString() + " (" + basePrimaryAttributes.Intelligence.ToString() +")";
+            characterSheet[4] = "Dexterity: " + totalPrimaryAttributes.Dexterity.ToString() + " (" + basePrimaryAttributes.Dexterity.ToString() + ")";
+            characterSheet[5] = "Health: " + secondaryAttributes.Health.ToString();
+            characterSheet[6] = "Armor Rating: " + secondaryAttributes.ArmorRating.ToString();
+            characterSheet[7] = "Elemental Resistance: " + secondaryAttributes.ElementalResistance.ToString();
+            characterSheet[8] = "DPS: " + CharacterDPS();
+            return characterSheet;
         }
 
-        public override bool AvailableWeaponType(Weapon item)
-        {
-            return (item.WeaponType == WeaponType.WEAPON_STAFF || item.WeaponType == WeaponType.WEAPON_WAND) && item.ItemLevel <= Level;
-        }
+        public abstract void IncreasePrimaryAttributes();
+
+        public abstract bool AvailableArmorType(Armor item);
+
+        public abstract bool AvailableWeaponType(Weapon item);
+
+        public abstract double GetMainPrimaryAttributeValue();
+
     }
 }
