@@ -194,12 +194,36 @@ namespace GenericRPG
             return characterSheet;
         }
 
+        //
+        // Summary:
+        //     Increases the primary attributes of a hero. Called when a hero levels up.
+        //
         public abstract void IncreasePrimaryAttributes();
 
+        //
+        // Summary:
+        //     Checks if a hero character is able to equip a certain item.
+        //
+        // Parameters:
+        //   item:
+        //     The specific item of the type GenerigRPG.Armor that should be checked for eligibility.
+        //
         public abstract bool AvailableArmorType(Armor item);
 
+        //
+        // Summary:
+        //     Checks if a hero character is able to equip a certain item.
+        //
+        // Parameters:
+        //   item:
+        //     The specific item of the type GenerigRPG.Weapon that should be checked for eligibility.
+        //
         public abstract bool AvailableWeaponType(Weapon item);
 
+        //
+        // Summary:
+        //     Returns the value that represents a hero class damage multiplying primary attribute, as a double.
+        //
         public abstract double GetMainPrimaryAttributeValue();
 
     }
