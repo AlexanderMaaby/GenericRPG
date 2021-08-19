@@ -19,6 +19,17 @@ namespace GenericRPG
         {
         }
 
+        //
+        // Summary:
+        //     Levels up the hero the amount of levels requested in the paramter.
+        //
+        // Parameters:
+        //   levelsToGain:
+        //     An int for the amount of levels the specific hero should gain.
+        //
+        // Exceptions:
+        //   T:System.ArgumentException:
+        //     levelsToGain is 0 or lower.
         public void LevelUp(int levelsToGain)
         {
             if (levelsToGain > 0)
@@ -35,7 +46,15 @@ namespace GenericRPG
             }
             RecalculateSecondaryAttributes();
         }
-        
+
+        //
+        // Summary:
+        //     Removes any temporary attributes increased from the character wearing armor.
+        //
+        // Parameters:
+        //   item:
+        //     The specific item of the type GenerigRPG.Armor that should be removed from the hero.
+        //     
         public void RemoveTemporaryAttributes(Armor item)
         {
             totalPrimaryAttributes.Intelligence -= item.primaryAttributes?.Intelligence ?? 0;
@@ -43,6 +62,15 @@ namespace GenericRPG
             totalPrimaryAttributes.Dexterity -= item.primaryAttributes?.Dexterity ?? 0;
             totalPrimaryAttributes.Vitality -= item.primaryAttributes?.Vitality ?? 0;
         }
+
+        //
+        // Summary:
+        //     Adds temporary attributes increased from the character wearing armor.
+        //
+        // Parameters:
+        //   item:
+        //     The specific item of the type GenerigRPG.Armor that should be added to the hero.
+        // 
         public void AddTemporaryAttributes(Armor item)
         {
             totalPrimaryAttributes.Intelligence += item.primaryAttributes?.Intelligence ?? 0;
@@ -51,6 +79,10 @@ namespace GenericRPG
             totalPrimaryAttributes.Vitality += item.primaryAttributes?.Vitality ?? 0;
         }
 
+        //
+        // Summary:
+        //     Recalculates a hero characters secondary stats based upon the heroes current totalPrimaryAttributes.
+        // 
         public void RecalculateSecondaryAttributes()
         {
             int tempStrength = (int) totalPrimaryAttributes.Strength;
@@ -59,6 +91,18 @@ namespace GenericRPG
             int tempVit = (int)totalPrimaryAttributes.Vitality;
             secondaryAttributes = new SecondaryAttributes(tempStrength, tempDex, tempInt, tempVit);
         }
+        //
+        // Summary:
+        //     Equips a new weapon to the hero character. 
+        //
+        // Parameters:
+        //   item:
+        //     The specific item of the type GenerigRPG.Weapon that should be equipped to the hero character.
+        //
+        // Exceptions:
+        //   GenerigRPG.InvalidWeaponException:
+        //     If the item level of the weapon is higher than the level of the hero, or if the weapon type is not compatible with the hero class.
+        //
         public string EquipItem(Weapon item)
         {
             string returnstring = "No weapon equipped!";
@@ -70,12 +114,23 @@ namespace GenericRPG
             }
             else
             {
-                //catch custom exception
                 throw new InvalidWeaponException("This character cannot equip this weapon");
             }
             return returnstring;
         }
 
+        //
+        // Summary:
+        //     Equips a new armor to the hero character. 
+        //
+        // Parameters:
+        //   item:
+        //     The specific item of the type GenerigRPG.Armor that should be equipped to the hero character.
+        //
+        // Exceptions:
+        //   GenerigRPG.InvalidArmorException:
+        //     If the item level of the armor is higher than the level of the hero, or if the armor type is not compatible with the hero class.
+        //
         public string EquipItem(Armor item)
         {
             string returnstring = "No item equipped!";
@@ -98,6 +153,10 @@ namespace GenericRPG
             }
             return returnstring;
         }
+        //
+        // Summary:
+        //     Returns the hero characters current DPS (damage per second) as a double.
+        //
         public double CharacterDPS()
         {
             Weapon weapon;
@@ -114,6 +173,11 @@ namespace GenericRPG
             }
             return tempDPS;
         }
+
+        //
+        // Summary:
+        //     Returns a array of strings with all relevant data from a hero character.
+        //
         public string[] CharacterSheetString()
         {
             Console.WriteLine(totalPrimaryAttributes.Intelligence.ToString());
