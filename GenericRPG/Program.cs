@@ -35,6 +35,27 @@ namespace GenericRPG
             }
             Console.WriteLine((7.00 * 1.1) * (1.00 * (1.00 + ((5.00 + 1.00) / 100.00))));
 
+            //gameloop
+            bool game = true;
+            while(game)
+            {
+                Console.Clear();
+                Console.WriteLine("Input your action, 'levelup', 'exit'");
+                string input = Console.ReadLine();
+                if (input.Equals("exit"))
+                {
+                    game = false;
+                }
+                if (input.Equals("levelup"))
+                {
+                    heroicdude.LevelUp(1);
+                }
+                foreach (string turnips in heroicdude.CharacterSheetString())
+                {
+                    Console.WriteLine(turnips);
+                }
+                Console.ReadLine();
+            }
         }
     }
 }

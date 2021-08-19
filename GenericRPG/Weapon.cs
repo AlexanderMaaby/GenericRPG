@@ -29,6 +29,9 @@ namespace GenericRPG
             WeaponType = weaponType;;
             AttackDPS = weaponDamage * attackSpeed;
         }
+        /// <summary>
+        /// Creates a new weapon with default generic values.
+        /// </summary>
         public Weapon()
         {
             ItemName = "Generic Weapon";
