@@ -6,12 +6,17 @@ using System.Threading.Tasks;
 
 namespace GenericRPG
 {
+    /// <summary>
+    /// Represents armor to be potentially equipped by a hero character.
+    /// </summary>
     public class Armor : Item
     {
         public ArmorType armorType { get; set; }
 
         public BasePrimaryAttributes primaryAttributes;
-
+        /// <summary>
+        /// Creates a new weapon with default generic values.
+        /// </summary>
         public Armor()
         {
             ItemName = "Bananbukse";

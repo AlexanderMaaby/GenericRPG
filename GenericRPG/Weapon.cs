@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace GenericRPG
 {
+    /// <summary>
+    /// Represents a weapon to be potentially equipped by a hero character.
+    /// </summary>
     public class Weapon : Item
     {
         public int WeaponDamage { get; set; }

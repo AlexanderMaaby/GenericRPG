@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace GenericRPG
 {
+    /// <summary>
+    /// Contains all logic in relation to a hero character. 
+    /// </summary>
     public abstract class Hero
     {
         public string Name { get; set; } = "Generic Hero";
@@ -15,9 +18,6 @@ namespace GenericRPG
         public SecondaryAttributes secondaryAttributes;
         public Dictionary<string, dynamic> inventory = new Dictionary<string, dynamic>();
 
-        public Hero()
-        {
-        }
 
         /// <summary>
         /// Levels up the hero the amount of levels requested in the paramter.
