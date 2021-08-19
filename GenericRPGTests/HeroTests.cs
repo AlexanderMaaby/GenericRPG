@@ -34,10 +34,23 @@ namespace GenericRPGTests
         {
             //Arrange
             GenericRPG.Mage hero = new GenericRPG.Mage();
+            int levelsToGain = -1;
 
             //Act and Assert
-            Assert.Throws<ArgumentException>(() => hero.LevelUp(0));
+            Assert.Throws<ArgumentException>(() => hero.LevelUp(levelsToGain));
         }
+        [Theory]
+        [InlineData(0)]
+        [InlineData(-1)]
+        public void LevelUp_LevelUpZeroOrLess_ShouldThrowArgumentException(int data)
+        {
+            //Arrange
+            GenericRPG.Mage hero = new GenericRPG.Mage();
+            int actual = data;
+            //Act and Assert
+            Assert.Throws<ArgumentException>(() => hero.LevelUp(actual));
+        }
+
         [Fact]
         public void MageBasePrimaryAttributes_DefaultValueAdded_ShouldBeAtLevelOneValues()
         {

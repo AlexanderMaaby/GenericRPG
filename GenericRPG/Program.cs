@@ -54,6 +54,7 @@ namespace GenericRPG
                 {
                     Console.WriteLine(turnips);
                 }
+                Console.WriteLine("Press any key to continue");
                 Console.ReadLine();
             }
         }
