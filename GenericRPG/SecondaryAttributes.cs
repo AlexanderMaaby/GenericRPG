@@ -13,6 +13,21 @@ namespace GenericRPG
         public int ArmorRating { get; set; }
         public int ElementalResistance { get; set; }
 
+        //
+        // Summary:
+        //     Creates a set of secondary attributes for a hero. 
+        //
+        // Parameters:
+        //   str:
+        //     The amount of strength the hero has.
+        //   dex:
+        //     The amount of dexterity the hero has.
+        //   intel:
+        //     The amount of intellect the hero has.
+        //   vit:
+        //     The amount of vitality the hero has.
+        //
+
         public SecondaryAttributes(int str, int dex, int intel, int vit)
         {
             Health = vit * vitalityHealthModifier;
@@ -24,6 +39,20 @@ namespace GenericRPG
         {
 
         }
+        //
+        // Summary:
+        //     Recalcualtes a set of secondary attributes for a hero. 
+        //
+        // Parameters:
+        //   str:
+        //     The amount of strength the hero has.
+        //   dex:
+        //     The amount of dexterity the hero has.
+        //   intel:
+        //     The amount of intellect the hero has.
+        //   vit:
+        //     The amount of vitality the hero has.
+        //
         public void RecalculateSecondaryAttributes(int str, int dex, int intel, int vit)
         {
             Health = vit * vitalityHealthModifier;
