@@ -30,6 +30,9 @@ namespace GenericRPG
             ElementalResistance = intel;
         }
 
+        /// <summary>
+        /// Creates a set of secondary attributes for a hero. 
+        /// </summary>
         public SecondaryAttributes()
         {
 
