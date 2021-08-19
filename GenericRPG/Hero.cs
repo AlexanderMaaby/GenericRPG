@@ -19,17 +19,13 @@ namespace GenericRPG
         {
         }
 
-        //
-        // Summary:
-        //     Levels up the hero the amount of levels requested in the paramter.
-        //
-        // Parameters:
-        //   levelsToGain:
-        //     An int for the amount of levels the specific hero should gain.
-        //
-        // Exceptions:
-        //   T:System.ArgumentException:
-        //     levelsToGain is 0 or lower.
+        /// <summary>
+        /// Levels up the hero the amount of levels requested in the paramter.
+        /// </summary>
+        /// <param name="levelsToGain">An int for the amount of levels the specific hero should gain.</param>
+        /// <exception cref=System.ArgumentException">
+        /// <paramref name="levelsToGain"/> is 0 or less.
+        /// </exception>
         public void LevelUp(int levelsToGain)
         {
             if (levelsToGain > 0)
@@ -47,14 +43,10 @@ namespace GenericRPG
             RecalculateSecondaryAttributes();
         }
 
-        //
-        // Summary:
-        //     Removes any temporary attributes increased from the character wearing armor.
-        //
-        // Parameters:
-        //   item:
-        //     The specific item of the type GenerigRPG.Armor that should be removed from the hero.
-        //     
+        /// <summary>
+        /// Removes any temporary attributes increased from the character wearing armor.
+        /// </summary>
+        /// <param name="item">The specific item of the type GenerigRPG.Armor that should be removed from the hero.</param>
         public void RemoveTemporaryAttributes(Armor item)
         {
             totalPrimaryAttributes.Intelligence -= item.primaryAttributes?.Intelligence ?? 0;
@@ -63,14 +55,10 @@ namespace GenericRPG
             totalPrimaryAttributes.Vitality -= item.primaryAttributes?.Vitality ?? 0;
         }
 
-        //
-        // Summary:
-        //     Adds temporary attributes increased from the character wearing armor.
-        //
-        // Parameters:
-        //   item:
-        //     The specific item of the type GenerigRPG.Armor that should be added to the hero.
-        // 
+        /// <summary>
+        /// Adds temporary attributes increased from the character wearing armor.
+        /// </summary>
+        /// <param name="item">The specific item of the type GenerigRPG.Armor that should be added to the hero.</param>
         public void AddTemporaryAttributes(Armor item)
         {
             totalPrimaryAttributes.Intelligence += item.primaryAttributes?.Intelligence ?? 0;
@@ -79,10 +67,9 @@ namespace GenericRPG
             totalPrimaryAttributes.Vitality += item.primaryAttributes?.Vitality ?? 0;
         }
 
-        //
-        // Summary:
-        //     Recalculates a hero characters secondary stats based upon the heroes current totalPrimaryAttributes.
-        // 
+        /// <summary>
+        /// Recalculates a hero characters secondary stats based upon the heroes current totalPrimaryAttributes.
+        /// </summary>
         public void RecalculateSecondaryAttributes()
         {
             int tempStrength = (int) totalPrimaryAttributes.Strength;
@@ -91,18 +78,15 @@ namespace GenericRPG
             int tempVit = (int)totalPrimaryAttributes.Vitality;
             secondaryAttributes = new SecondaryAttributes(tempStrength, tempDex, tempInt, tempVit);
         }
-        //
-        // Summary:
-        //     Equips a new weapon to the hero character. 
-        //
-        // Parameters:
-        //   item:
-        //     The specific item of the type GenerigRPG.Weapon that should be equipped to the hero character.
-        //
-        // Exceptions:
-        //   GenerigRPG.InvalidWeaponException:
-        //     If the item level of the weapon is higher than the level of the hero, or if the weapon type is not compatible with the hero class.
-        //
+
+        /// <summary>
+        /// Equips a new weapon to the hero character. 
+        /// </summary>
+        /// <param name="item">The specific item of the type GenerigRPG.Weapon that should be equipped to the hero character.</param>
+        /// <returns>A string specifying whether equipping the weapon was succesfull or not.</returns>
+        /// <exception cref="GenericRPG.InvalidWeaponException">
+        /// <paramref name="item"/> is not an item the hero character can either due to item level or weapon type.
+        /// </exception>
         public string EquipItem(Weapon item)
         {
             string returnstring = "No weapon equipped!";
@@ -119,18 +103,14 @@ namespace GenericRPG
             return returnstring;
         }
 
-        //
-        // Summary:
-        //     Equips a new armor to the hero character. 
-        //
-        // Parameters:
-        //   item:
-        //     The specific item of the type GenerigRPG.Armor that should be equipped to the hero character.
-        //
-        // Exceptions:
-        //   GenerigRPG.InvalidArmorException:
-        //     If the item level of the armor is higher than the level of the hero, or if the armor type is not compatible with the hero class.
-        //
+        /// <summary>
+        /// Equips a new armor to the hero character. 
+        /// </summary>
+        /// <param name="item">The specific item of the type GenerigRPG.Armor that should be equipped to the hero character.</param>
+        /// <returns>A string specifying whether equipping the armor was succesfull or not.</returns>
+        /// <exception cref="GenericRPG.InvalidArmorException">
+        /// <paramref name="item"/> is not an item the hero character can either due to item level or armor type.
+        /// </exception>
         public string EquipItem(Armor item)
         {
             string returnstring = "No item equipped!";
@@ -153,10 +133,11 @@ namespace GenericRPG
             }
             return returnstring;
         }
-        //
-        // Summary:
-        //     Returns the hero characters current DPS (damage per second) as a double.
-        //
+
+        /// <summary>
+        /// Method to find the characters current DPS.
+        /// </summary>
+        /// <returns>Returns the hero characters current DPS (damage per second) as a double.</returns>
         public double CharacterDPS()
         {
             Weapon weapon;
@@ -174,10 +155,10 @@ namespace GenericRPG
             return tempDPS;
         }
 
-        //
-        // Summary:
-        //     Returns a array of strings with all relevant data from a hero character.
-        //
+        /// <summary>
+        /// Shows the character sheet of the given hero character.
+        /// </summary>
+        /// <returns>An array of strings with all the relevant hero character data.</returns>
         public string[] CharacterSheetString()
         {
             Console.WriteLine(totalPrimaryAttributes.Intelligence.ToString());
@@ -194,36 +175,29 @@ namespace GenericRPG
             return characterSheet;
         }
 
-        //
-        // Summary:
-        //     Increases the primary attributes of a hero. Called when a hero levels up.
-        //
+        /// <summary>
+        /// Increases the primary attributes of a hero. Called when a hero levels up.
+        /// </summary>
         public abstract void IncreasePrimaryAttributes();
 
-        //
-        // Summary:
-        //     Checks if a hero character is able to equip a certain item.
-        //
-        // Parameters:
-        //   item:
-        //     The specific item of the type GenerigRPG.Armor that should be checked for eligibility.
-        //
+        /// <summary>
+        /// Checks if a hero character is able to equip a certain item.
+        /// </summary>
+        /// <param name="item">The specific item of the type GenerigRPG.Armor that should be checked for eligibility.</param>
+        /// <returns>Returns a bool whether or not the hero character can equip given item.</returns>
         public abstract bool AvailableArmorType(Armor item);
 
-        //
-        // Summary:
-        //     Checks if a hero character is able to equip a certain item.
-        //
-        // Parameters:
-        //   item:
-        //     The specific item of the type GenerigRPG.Weapon that should be checked for eligibility.
-        //
+        /// <summary>
+        /// Checks if a hero character is able to equip a certain item.
+        /// </summary>
+        /// <param name="item">The specific item of the type GenerigRPG.Weapon that should be checked for eligibility.</param>
+        /// <returns>Returns a bool whether or not the hero character can equip given item.</returns>
         public abstract bool AvailableWeaponType(Weapon item);
 
-        //
-        // Summary:
-        //     Returns the value that represents a hero class damage multiplying primary attribute, as a double.
-        //
+        /// <summary>
+        /// Returns the value that represents a hero class damage multiplying primary attribute, as a double.
+        /// </summary>
+        /// <returns>The main primary attribute for a hero class as a double.</returns>
         public abstract double GetMainPrimaryAttributeValue();
 
     }

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace GenericRPG
 {
+    /// <summary>
+    /// A class containing the secondary attributes: health, armor rating and elemental resistance.
+    /// </summary>
     public class SecondaryAttributes
     {
         public int Health { get; set; }
@@ -13,21 +16,13 @@ namespace GenericRPG
         public int ArmorRating { get; set; }
         public int ElementalResistance { get; set; }
 
-        //
-        // Summary:
-        //     Creates a set of secondary attributes for a hero. 
-        //
-        // Parameters:
-        //   str:
-        //     The amount of strength the hero has.
-        //   dex:
-        //     The amount of dexterity the hero has.
-        //   intel:
-        //     The amount of intellect the hero has.
-        //   vit:
-        //     The amount of vitality the hero has.
-        //
-
+        /// <summary>
+        /// Creates a set of secondary attributes for a hero. 
+        /// </summary>
+        /// <param name="str">The amount of strength the hero has.</param>
+        /// <param name="dex">The amount of dexterity the hero has.</param>
+        /// <param name="intel">The amount of intellect the hero has.</param>
+        /// <param name="vit">The amount of vitality the hero has.</param>
         public SecondaryAttributes(int str, int dex, int intel, int vit)
         {
             Health = vit * vitalityHealthModifier;
@@ -39,20 +34,14 @@ namespace GenericRPG
         {
 
         }
-        //
-        // Summary:
-        //     Recalcualtes a set of secondary attributes for a hero. 
-        //
-        // Parameters:
-        //   str:
-        //     The amount of strength the hero has.
-        //   dex:
-        //     The amount of dexterity the hero has.
-        //   intel:
-        //     The amount of intellect the hero has.
-        //   vit:
-        //     The amount of vitality the hero has.
-        //
+
+        /// <summary>
+        /// Recalcualtes a set of secondary attributes for a hero. 
+        /// </summary>
+        /// <param name="str">The amount of strength the hero has.</param>
+        /// <param name="dex">The amount of dexterity the hero has.</param>
+        /// <param name="intel">The amount of intellect the hero has.</param>
+        /// <param name="vit">The amount of vitality the hero has.</param>
         public void RecalculateSecondaryAttributes(int str, int dex, int intel, int vit)
         {
             Health = vit * vitalityHealthModifier;

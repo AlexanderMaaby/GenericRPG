@@ -13,6 +13,15 @@ namespace GenericRPG
         public double AttackDPS { get; set; }
         public WeaponType WeaponType { get; set; }
 
+        /// <summary>
+        /// Creates a new weapon.
+        /// </summary>
+        /// <param name="weaponDamage">The damage the weapon has.</param>
+        /// <param name="attackSpeed">The attack speed of the weapon.</param>
+        /// <param name="weaponType">What type of weapon it is, has to be valid enum WeaponType.</param>
+        /// <param name="itemName">The name of the item that is to be created.</param>
+        /// <param name="itemLevel">The required level for a hero to use this item.</param>
+        /// <param name="itemSlot">The item slot that the item can be equipped in, requires a ItemSlot enum.</param>
         public Weapon(int weaponDamage, double attackSpeed, WeaponType weaponType, string itemName, int itemLevel, ItemSlot itemSlot) : base(itemName, itemLevel, itemSlot)
         {
             WeaponDamage = weaponDamage;
@@ -22,7 +31,7 @@ namespace GenericRPG
         }
         public Weapon()
         {
-            ItemName = "Bananbue";
+            ItemName = "Generic Weapon";
             ItemLevel = 1;
             ItemSlot = ItemSlot.SLOT_WEAPON;
             WeaponDamage = 8;
